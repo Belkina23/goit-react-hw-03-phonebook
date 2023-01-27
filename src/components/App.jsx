@@ -14,6 +14,20 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const contacts = JSON.parse(localStorage.getItem('my-contacts'));
+    if (contacts && contacts.length) {
+      this.setState({ contacts });
+    }
+  }
+
+  componentDidUpdate(prevPros, prevState) {
+    const { contacts } = this.state;
+    if (prevState.contacts.length !== contacts.length) {
+      localStorage.setItem('my-contacts', JSON.stringify(contacts));
+    }
+  }
+
   onSubmitHendler = data => {
     const contact = {
       id: contactId,
